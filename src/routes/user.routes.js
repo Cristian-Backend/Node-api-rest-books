@@ -19,7 +19,7 @@ router.get('/:id', [
 
 router.post('/', [
     validarJWT,
-    esAdminRole,
+    esAdminRole, 
     check('name', "El nombre es obligatorio").not().isEmpty(), // para que el campo no quede vacio
     check('email', "el correo no es valido").isEmail(),
     check('email').custom(EmailValido),

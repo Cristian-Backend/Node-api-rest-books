@@ -15,11 +15,11 @@ const bookSchema = new mongoose.Schema({
         required: [true, 'El autor es obligatorio']
     },
 
-    categoria: {  // vamos saber la informacion de que categoria viene el producto.
+     categoria: {  // vamos saber la informacion de que categoria viene el producto.
         type: Schema.Types.ObjectId, 
         ref: 'Categoria', // nombro al schema Categoria
         required: true
-    } , 
+    }  ,
     pages: {
         type: Number
     },
