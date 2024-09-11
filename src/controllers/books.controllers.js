@@ -3,25 +3,37 @@ const Book = require('../models/book')
 
 
 // otbener todos los libros
-const getAllBooks = async(req,res)=> {
-const books = await Book.find({estado:true})
-const totalBooks = books.length;
-res.json({
-    totalBooks,
-    books
-    
-})
+const getAllBooks = async (req, res) => {
+    try {
+        const books = await Book.find({ estado: true })
+            .populate('categoria', 'name'); // Rellena el campo 'categoria' con el campo 'name' de la colección Categoria
+        const totalBooks = books.length;
+        res.json({
+            totalBooks,
+            books
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error al obtener los libros' });
+    }
+};
 
-} 
 
 // LIBRO POR ID
-const getBookId  = async(req,res)=> {
-
-    const {id} = req.params
-    const book = await Book.findById(id)
-
-    res.json(book)
-}
+const getBookId = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const book = await Book.findById(id)
+            .populate('categoria', 'name'); // Rellena el campo 'categoria' con el campo 'name' de la colección Categoria
+        if (!book) {
+            return res.status(404).json({ message: 'Libro no encontrado' });
+        }
+        res.json(book);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error al obtener el libro' });
+    }
+};
 
 
 // crear book
